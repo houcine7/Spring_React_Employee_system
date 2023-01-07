@@ -10,5 +10,4 @@ public class SpringReactApplication {
 
 		SpringApplication.run(SpringReactApplication.class, args);
 	}
-
 }

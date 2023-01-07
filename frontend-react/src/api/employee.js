@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 
 const API_URL = "http://localhost:8080/api/v1/employees";
 
@@ -16,4 +16,12 @@ const getAllEmployees = async () => {
   return data;
 };
 
-export { saveEmployee, getAllEmployees };
+const deleteEmployee = async (id) => {
+  //
+  const response = await axios.delete(API_URL + "/" + id);
+  const data = response.data;
+  console.log(data);
+  return data;
+};
+
+export { saveEmployee, getAllEmployees, deleteEmployee };

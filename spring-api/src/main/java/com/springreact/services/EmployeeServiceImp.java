@@ -1,6 +1,7 @@
 package com.springreact.services;
 
 import com.springreact.Entities.EmployeeEntity;
+import com.springreact.exceptions.NoEmployeeException;
 import com.springreact.model.Employee;
 import com.springreact.repository.EmployeeRepository;
 import org.springframework.beans.BeanUtils;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -42,5 +44,17 @@ public class EmployeeServiceImp implements EmployeeService{
                 ).collect(Collectors.toList());
 
         return listEmployee ;
+    }
+
+    @Override
+    public boolean deleteEmployee(int id) throws NoEmployeeException {
+        try{
+            EmployeeEntity emp= employeeRepository.findById(id).get() ;
+            employeeRepository.deleteById(id);
+            return true;
+        }catch(Exception e){
+            throw  new NoEmployeeException("employee not found") ;
+        }
+
     }
 }
