@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import saveEmployee from "../api/employee";
+import { saveEmployee } from "../api/employee";
 
 const initialState = {
   firstName: "",

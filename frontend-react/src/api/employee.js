@@ -9,4 +9,11 @@ const saveEmployee = async (employee) => {
   return data;
 };
 
-export default saveEmployee;
+const getAllEmployees = async () => {
+  //
+  const response = await axios.get(API_URL);
+  const data = await response.data;
+  return data;
+};
+
+export { saveEmployee, getAllEmployees };

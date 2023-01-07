@@ -12,15 +12,18 @@ const Navbar = () => {
       <ul className="lg:flex lg:justify-start col-span-2">
         <li className="px-4 ">
           <a
-            href="#home"
+            href="/"
             className="text-gray-800 font-semibold border-b-4 border-violet-700"
           >
             home
           </a>
         </li>
         <li className="px-4">
-          <a href="#home" className="hover:border-b-4 hover:border-violet-700">
-            about
+          <a
+            href="/employees/form"
+            className="hover:border-b-4 hover:border-violet-700"
+          >
+            Add employee
           </a>
         </li>
         <li className="px-4">

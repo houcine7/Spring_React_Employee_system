@@ -2,7 +2,6 @@ package com.springreact.controllers;
 
 
 import com.springreact.model.Employee;
-import com.springreact.repository.EmployeeRepository;
 import com.springreact.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
