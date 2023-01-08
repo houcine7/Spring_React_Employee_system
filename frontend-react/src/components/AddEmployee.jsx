@@ -1,6 +1,5 @@
-import { updateLocale } from "moment";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getEmployeeById, saveEmployee, updateEmployee } from "../api/employee";
 
 const initialState = {
