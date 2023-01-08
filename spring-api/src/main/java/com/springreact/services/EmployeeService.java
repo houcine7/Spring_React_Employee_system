@@ -1,6 +1,7 @@
 package com.springreact.services;
 
 
+import com.springreact.Entities.EmployeeEntity;
 import com.springreact.model.Employee;
 import org.springframework.stereotype.Service;
 
@@ -13,4 +14,8 @@ public interface EmployeeService {
     List<Employee> getAllEmployees();
 
     boolean deleteEmployee(int id);
+
+    Employee getEmployeeById(int id);
+
+    Employee updateEmployee(Employee employee,int id);
 }

@@ -35,7 +35,14 @@ const EmployeeRow = ({ employee, setShowAlert, setEmployeeId }) => {
           >
             Delete
           </button>
-          <button className="bg-green-300 rounded-lg px-3 py-2 font-semibold text-sm transition hover:bg-green-500">
+          <button
+            className="bg-green-300 rounded-lg px-3 py-2 font-semibold text-sm transition hover:bg-green-500"
+            onClick={() => {
+              window.location.replace(
+                "/employees/form?edit=true&id=" + employee.id
+              );
+            }}
+          >
             Edit
           </button>
         </td>

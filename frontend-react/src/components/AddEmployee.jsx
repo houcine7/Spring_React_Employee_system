@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { saveEmployee } from "../api/employee";
+import { updateLocale } from "moment";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { getEmployeeById, saveEmployee, updateEmployee } from "../api/employee";
 
 const initialState = {
   firstName: "",
@@ -9,11 +11,19 @@ const initialState = {
 
 const validRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+//
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 const AddEmployee = () => {
   //
   const [employeeState, setEmployeeState] = useState({ initialState });
   const [showAlert, setShowAlert] = useState(false);
-
+  const [isEdit, setIsEdit] = useState(false);
+  let query = useQuery();
   //
   const handelChange = (e) => {
     setEmployeeState((prevState) => {
@@ -30,7 +40,18 @@ const AddEmployee = () => {
       employeeState.email?.match(validRegex)
     ) {
       //
-      saveEmployee(employeeState);
+      if (!isEdit) {
+        const data = saveEmployee(employeeState);
+        if (data != null) {
+          window.location.replace("/");
+        }
+      } else {
+        //const data
+        const data = updateEmployee(employeeState, query.get("id"));
+        if (data != null) {
+          window.location.replace("/");
+        }
+      }
     } else {
       setShowAlert(true);
 
@@ -40,6 +61,20 @@ const AddEmployee = () => {
       }, 5000);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (query.get("edit") === "true") {
+        setIsEdit(true);
+        if (query.get("id") != null) {
+          const employeeToEdit = await getEmployeeById(query.get("id"));
+          setEmployeeState(employeeToEdit);
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -62,7 +97,7 @@ const AddEmployee = () => {
         )}
         <div className="relative flex">
           <p className="p-4 text-lg font-thin tracking-wider">
-            Add an employee
+            {!isEdit ? "Add an employee" : "Edit an employee"}
           </p>
           <div className="my-5">
             <form action="#" className="mx-5" onSubmit={(e) => handelSave(e)}>
@@ -74,6 +109,7 @@ const AddEmployee = () => {
                   type="text"
                   id="firstName"
                   name="firstName"
+                  value={employeeState?.firstName}
                   placeholder="first name here"
                   className="mt-2 p-2 border text-sm font-normal  h-9 w-96 outline-gray-400"
                   onChange={(e) => handelChange(e)}
@@ -89,6 +125,7 @@ const AddEmployee = () => {
                   id="lastName"
                   name="lastName"
                   placeholder="last name here"
+                  value={employeeState?.lastName}
                   className="mt-2 p-2 border text-sm font-normal  h-9 w-96 outline-gray-400"
                   onChange={(e) => handelChange(e)}
                 />
@@ -102,13 +139,14 @@ const AddEmployee = () => {
                   id="email"
                   name="email"
                   placeholder="email here"
+                  value={employeeState?.email}
                   className="mt-2 p-2 border text-sm font-normal  h-9 w-96 outline-gray-400"
                   onChange={(e) => handelChange(e)}
                 />
               </div>
               <div className="mt-3 font-semibold text-sm tracking-wider text-white">
                 <button className="rounded-lg bg-violet-600 px-5 py-2 shadow-lg hover:bg-violet-400">
-                  save{" "}
+                  {!isEdit ? "save " : "update "}
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

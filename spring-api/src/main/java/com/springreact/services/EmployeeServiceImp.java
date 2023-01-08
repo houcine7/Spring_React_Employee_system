@@ -47,7 +47,7 @@ public class EmployeeServiceImp implements EmployeeService{
     }
 
     @Override
-    public boolean deleteEmployee(int id) throws NoEmployeeException {
+    public boolean deleteEmployee(int id)  {
         try{
             EmployeeEntity emp= employeeRepository.findById(id).get() ;
             employeeRepository.deleteById(id);
@@ -56,5 +56,31 @@ public class EmployeeServiceImp implements EmployeeService{
             throw  new NoEmployeeException("employee not found") ;
         }
 
+    }
+
+    @Override
+    public Employee getEmployeeById(int id) {
+        try{
+            EmployeeEntity employeeEntity =employeeRepository.findById(id).get() ;
+            Employee emp = new Employee() ;
+            BeanUtils.copyProperties(employeeEntity,emp);
+            return emp;
+        }catch(Exception e){
+            throw new NoEmployeeException("employee not found") ;
+        }
+    }
+
+    @Override
+    public Employee updateEmployee(Employee employee,int id) {
+        try{
+            EmployeeEntity employeeEntity =employeeRepository.findById(id).get() ;
+            employeeEntity.setEmail(employee.getEmail());
+            employeeEntity.setFirstName(employee.getFirstName());
+            employeeEntity.setLastName(employee.getLastName());
+            employeeRepository.save(employeeEntity);
+            return employee ;
+        }catch(Exception e){
+                throw new NoEmployeeException("No employee with the provided id") ;
+        }
     }
 }

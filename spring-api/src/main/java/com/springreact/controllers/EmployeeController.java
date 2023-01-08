@@ -1,6 +1,7 @@
 package com.springreact.controllers;
 
 
+import com.springreact.Entities.EmployeeEntity;
 import com.springreact.exceptions.NoEmployeeException;
 import com.springreact.model.Employee;
 import com.springreact.services.EmployeeService;
@@ -20,9 +21,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService ;
 
-
     // employee api methods
-
     // to save employee
     @PostMapping("/employees")
     public Employee saveEmployee(@RequestBody Employee emp){
@@ -47,13 +46,29 @@ public class EmployeeController {
         }catch (NoEmployeeException e){
             Map<Boolean,String> response =new HashMap<>();
             response.put(false,"Not found" );
-            return new ResponseEntity<>(response , HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
+    //get user by id
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable int id){
+        try{
+            //
+            Employee employee =employeeService.getEmployeeById(id) ;
+            return new ResponseEntity<>(employee,HttpStatus.ACCEPTED);
+        }catch (NoEmployeeException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    //Edit user information
-
-
-
+    @PutMapping("/employees/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable int id,@RequestBody Employee employee){
+        try{
+            Employee updatedEmployee =employeeService.updateEmployee(employee,id) ;
+            return new ResponseEntity<>(updatedEmployee ,HttpStatus.ACCEPTED);
+        }catch (NoEmployeeException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
