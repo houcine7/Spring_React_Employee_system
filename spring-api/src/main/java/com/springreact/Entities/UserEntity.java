@@ -1,7 +1,7 @@
 package com.springreact.Entities;
 
 
-import com.springreact.services.appUsers.Role;
+import com.springreact.model.appUsers.Role;
 import jakarta.persistence.*;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
