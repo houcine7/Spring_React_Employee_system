@@ -21,6 +21,8 @@ public class UserDetailsImp implements UserDetails {
     private String username ;
     private Role role ;
     private String password ;
+    private String firstName;
+    private String lastName ;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
