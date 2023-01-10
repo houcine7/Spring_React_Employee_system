@@ -1,4 +1,4 @@
-package com.springreact.appUsers;
+package com.springreact.services.appUsers;
 
 
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User implements UserDetails {
+public class UserDetailsServiceImp implements UserDetails {
     private int id ;
     private String username ;
     private Role role ;

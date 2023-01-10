@@ -1,10 +1,9 @@
 package com.springreact.controllers;
 
 
-import com.springreact.Entities.EmployeeEntity;
 import com.springreact.exceptions.NoEmployeeException;
 import com.springreact.model.Employee;
-import com.springreact.services.EmployeeService;
+import com.springreact.services.Employee.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
