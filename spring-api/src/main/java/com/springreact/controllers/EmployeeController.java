@@ -14,28 +14,27 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api/v1")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/v1/employees")
+@CrossOrigin("http://localhost:3000")
 public class EmployeeController {
-
     @Autowired
     private EmployeeService employeeService ;
 
     // employee api methods
     // to save employee
-    @PostMapping("/employees")
+    @PostMapping("/")
     public Employee saveEmployee(@RequestBody Employee emp){
         return employeeService.createEmployee(emp) ;
     }
 
     // get all employees
-    @GetMapping("/employees")
+    @GetMapping("/")
     public List<Employee> getAllEmployees(){
         return employeeService.getAllEmployees() ;
     }
 
     // delete use by id
-    @DeleteMapping("/employees/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Map<Boolean,String>> deleteEmployee(@PathVariable int id){
         try{
             boolean deleted = employeeService.deleteEmployee(id) ;
@@ -51,7 +50,7 @@ public class EmployeeController {
 
     }
     //get user by id
-    @GetMapping("/employees/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable int id){
         try{
             //
@@ -62,7 +61,7 @@ public class EmployeeController {
         }
     }
 
-    @PutMapping("/employees/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable int id,@RequestBody Employee employee){
         try{
             Employee updatedEmployee =employeeService.updateEmployee(employee,id) ;

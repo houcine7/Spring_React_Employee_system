@@ -31,7 +31,7 @@ const AddEmployee = () => {
   };
 
   //
-  const handelSave = (e) => {
+  const handelSave = async (e) => {
     e.preventDefault();
     if (
       employeeState.firstName?.length >= 3 &&
@@ -40,9 +40,11 @@ const AddEmployee = () => {
     ) {
       //
       if (!isEdit) {
-        const data = saveEmployee(employeeState);
-        if (data != null) {
+        const response = await saveEmployee(employeeState);
+        if (response.status === 200) {
           window.location.replace("/");
+        } else {
+          console.log(".....................");
         }
       } else {
         //const data

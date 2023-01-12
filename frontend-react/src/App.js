@@ -11,11 +11,27 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<EmployeesList />} />
-          <Route path="/employees/form" element={<AddEmployee />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <EmployeesList />
+              </>
+            }
+          />
+          <Route
+            path="/employees/form"
+            element={
+              <>
+                <Navbar />
+                <AddEmployee />
+              </>
+            }
+          />
+          <Route path="/login" element={<Login isLogin={true} />} />
+          <Route path="/register" element={<Login isLogin={false} />} />
         </Routes>
       </BrowserRouter>
     </div>

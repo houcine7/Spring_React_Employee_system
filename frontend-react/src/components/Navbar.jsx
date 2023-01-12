@@ -1,7 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getCurrentUser } from "../api/users";
+import { useStateValue } from "../context/contextProvider";
+import { actionType } from "../context/reducer";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [{ user }, dispatch] = useStateValue();
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await getCurrentUser();
+        console.log(response);
+        if (response.status === 200) {
+          dispatch({
+            type: actionType.SET_USER,
+            user: {
+              username: response.data.username,
+              firstName: response.data.firstName,
+              lastName: response.data.lastName,
+            },
+          });
+        }
+      } catch (e) {
+        //
+        console.log("errooooooooor");
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
     <nav className="w-full h-14 bg-violet-400 grid grid-cols-4 items-center text-gray-700">
@@ -38,7 +64,7 @@ const Navbar = () => {
           className="font-bold cursor-pointer"
           onClick={() => setShowDropdown((prevState) => !prevState)}
         >
-          username
+          {user.username}
           <span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -61,8 +87,8 @@ const Navbar = () => {
           <div className="bg-white w-36 absolute top-6 border-2 right-5 shadow-lg font-medium">
             <ul>
               <li className="p-2 hover:bg-gray-400">
-                <a href="#login">
-                  login{" "}
+                <a href="/profile">
+                  profile{" "}
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +108,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="p-2 hover:bg-gray-400">
-                <a href="#login">
+                <a href="/login">
                   logout{" "}
                   <span>
                     <svg

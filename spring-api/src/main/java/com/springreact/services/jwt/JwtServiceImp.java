@@ -50,7 +50,7 @@ public class JwtServiceImp implements JwtService{
                 .addClaims(extrasClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + (24 * 60 * 60 *1000)))
                 .signWith(jwtUtils.getSignInKey())
                 .compact();
     }

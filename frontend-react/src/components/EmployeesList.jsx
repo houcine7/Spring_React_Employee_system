@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAllEmployees } from "../api/employee";
 import AlertPermession from "./AlertPermession";
 
@@ -9,13 +10,25 @@ const EmployeesList = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [idEmployee, setIdEmployee] = useState(0);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    async function fetchData() {
-      //
-      const data = await getAllEmployees();
-      setEmployeesData(data);
+    const token = localStorage.getItem("token");
+    if (token === null) {
+      navigate("/login");
+    } else {
+      async function fetchData() {
+        //
+        const data = await getAllEmployees();
+
+        if (data.status === 200) {
+          setEmployeesData(data.data);
+        } else {
+          navigate("/login");
+        }
+      }
+      fetchData();
     }
-    fetchData();
   }, []);
 
   return (
